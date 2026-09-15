@@ -17,10 +17,10 @@ Work in progress — building daily, one commit at a time.
 ##  Progress
 
 - [x] Day 1 — Project setup, basic HTML skeleton
-- [ ] Day 2 — CSS styling
-- [ ] Day 3 — Add habits with JavaScript
-- [ ] Day 4 — Mark done / delete habits
-- [ ] Day 5 — Persist data with localStorage
+- [x] Day 2 — CSS styling
+- [x] Day 3 — Add habits with JavaScript
+- [x] Day 4 — Mark done / delete habits
+- [x] Day 5 — Persist data with localStorage
 - [ ] Day 6 — Streak tracking logic
 - [ ] Day 7 — Backend setup (Node + Express)
 - [ ] Day 8 — Database integration
