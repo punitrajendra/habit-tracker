@@ -19,12 +19,28 @@ function renderHabits() {
     checkbox.checked = habit.done;
     checkbox.addEventListener('change', function() {
       habits[index].done = checkbox.checked;
+
+      if (checkbox.checked) {
+        const today = new Date().toDateString();
+        const yesterday = new Date(Date.now() - 86400000).toDateString();
+
+        if (habits[index].lastDoneDate === yesterday) {
+          habits[index].streak += 1;
+        } else if (habits[index].lastDoneDate !== today) {
+          habits[index].streak = 1;
+        }
+
+        habits[index].lastDoneDate = today;
+      } else {
+        habits[index].streak = Math.max(0, habits[index].streak - 1);
+      }
+
       saveHabits();
       renderHabits();
     });
 
     const span = document.createElement('span');
-    span.textContent = habit.text;
+    span.textContent = habit.text + ' (Streak: ' + habit.streak + ')';
     span.style.textDecoration = habit.done ? 'line-through' : 'none';
 
     const deleteBtn = document.createElement('button');
@@ -49,7 +65,7 @@ addBtn.addEventListener('click', function() {
     return;
   }
 
-  habits.push({ text: habitText, done: false });
+  habits.push({ text: habitText, done: false, streak: 0, lastDoneDate: null });
   saveHabits();
   renderHabits();
   habitInput.value = '';
