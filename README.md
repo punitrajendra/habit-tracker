@@ -21,8 +21,8 @@ Work in progress — building daily, one commit at a time.
 - [x] Day 3 — Add habits with JavaScript
 - [x] Day 4 — Mark done / delete habits
 - [x] Day 5 — Persist data with localStorage
-- [ ] Day 6 — Streak tracking logic
-- [ ] Day 7 — Backend setup (Node + Express)
+- [x] Day 6 — Streak tracking logic
+- [x] Day 7 — Backend setup (Node + Express)
 - [ ] Day 8 — Database integration
 - [ ] Day 9 — Connect frontend to backend
 - [ ] Day 10 — Deployment
