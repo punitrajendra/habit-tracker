@@ -24,7 +24,7 @@ Work in progress — building daily, one commit at a time.
 - [x] Day 6 — Streak tracking logic
 - [x] Day 7 — Backend setup (Node + Express)
 - [x] Day 8 — Database integration
-- [ ] Day 9 — Connect frontend to backend
+- [x] Day 9 — Connect frontend to backend
 - [ ] Day 10 — Deployment
 
 ##  Tech Stack (planned)
