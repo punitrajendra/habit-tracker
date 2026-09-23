@@ -4,8 +4,11 @@ dns.setServers(['8.8.8.8', '8.8.4.4']);
 
 const express = require('express');
 const mongoose = require('mongoose');
+const cors = require('cors');
 
 const app = express();
+app.use(cors());
+
 const PORT = 3000;
 
 mongoose.connect(process.env.MONGO_URI)
@@ -25,6 +28,16 @@ app.post('/habits', async (req, res) => {
   const newHabit = new Habit(req.body);
   await newHabit.save();
   res.json(newHabit);
+});
+
+app.put('/habits/:id', async (req, res) => {
+  const updated = await Habit.findByIdAndUpdate(req.params.id, req.body, { new: true });
+  res.json(updated);
+});
+
+app.delete('/habits/:id', async (req, res) => {
+  await Habit.findByIdAndDelete(req.params.id);
+  res.json({ message: 'Deleted' });
 });
 
 app.get('/', (req, res) => {

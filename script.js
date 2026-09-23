@@ -2,41 +2,25 @@ const addBtn = document.getElementById('addBtn');
 const habitInput = document.getElementById('habitInput');
 const habitList = document.getElementById('habitList');
 
-let habits = JSON.parse(localStorage.getItem('habits')) || [];
+const API_URL = 'http://localhost:3000/habits';
 
-function saveHabits() {
-  localStorage.setItem('habits', JSON.stringify(habits));
+async function fetchHabits() {
+  const res = await fetch(API_URL);
+  const habits = await res.json();
+  renderHabits(habits);
 }
 
-function renderHabits() {
+function renderHabits(habits) {
   habitList.innerHTML = '';
 
-  habits.forEach(function(habit, index) {
+  habits.forEach(function(habit) {
     const li = document.createElement('li');
 
     const checkbox = document.createElement('input');
     checkbox.type = 'checkbox';
     checkbox.checked = habit.done;
     checkbox.addEventListener('change', function() {
-      habits[index].done = checkbox.checked;
-
-      if (checkbox.checked) {
-        const today = new Date().toDateString();
-        const yesterday = new Date(Date.now() - 86400000).toDateString();
-
-        if (habits[index].lastDoneDate === yesterday) {
-          habits[index].streak += 1;
-        } else if (habits[index].lastDoneDate !== today) {
-          habits[index].streak = 1;
-        }
-
-        habits[index].lastDoneDate = today;
-      } else {
-        habits[index].streak = Math.max(0, habits[index].streak - 1);
-      }
-
-      saveHabits();
-      renderHabits();
+      updateHabit(habit._id, checkbox.checked);
     });
 
     const span = document.createElement('span');
@@ -46,9 +30,7 @@ function renderHabits() {
     const deleteBtn = document.createElement('button');
     deleteBtn.textContent = 'Delete';
     deleteBtn.addEventListener('click', function() {
-      habits.splice(index, 1);
-      saveHabits();
-      renderHabits();
+      deleteHabit(habit._id);
     });
 
     li.appendChild(checkbox);
@@ -58,17 +40,35 @@ function renderHabits() {
   });
 }
 
+async function addHabit(text) {
+  await fetch(API_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ text: text, done: false, streak: 0, lastDoneDate: null })
+  });
+  fetchHabits();
+}
+
+async function updateHabit(id, done) {
+  await fetch(API_URL + '/' + id, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ done: done })
+  });
+  fetchHabits();
+}
+
+async function deleteHabit(id) {
+  await fetch(API_URL + '/' + id, { method: 'DELETE' });
+  fetchHabits();
+}
+
 addBtn.addEventListener('click', function() {
   const habitText = habitInput.value.trim();
+  if (habitText === '') return;
 
-  if (habitText === '') {
-    return;
-  }
-
-  habits.push({ text: habitText, done: false, streak: 0, lastDoneDate: null });
-  saveHabits();
-  renderHabits();
+  addHabit(habitText);
   habitInput.value = '';
 });
 
-renderHabits();
+fetchHabits();
