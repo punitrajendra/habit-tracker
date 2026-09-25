@@ -1,4 +1,4 @@
-# Habit Tracker
+ # HABIT TRACKER
 
 A simple web app to track daily habits, mark them done, and build streaks — built step-by-step as a learning project covering frontend, backend, database, and deployment.
 
