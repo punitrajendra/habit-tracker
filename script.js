@@ -2,7 +2,7 @@ const addBtn = document.getElementById('addBtn');
 const habitInput = document.getElementById('habitInput');
 const habitList = document.getElementById('habitList');
 
-const API_URL = 'http://localhost:3000/habits';
+const API_URL = 'https://habit-tracker-api-400k.onrender.com/habits';
 
 async function fetchHabits() {
   const res = await fetch(API_URL);
