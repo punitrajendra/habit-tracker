@@ -1,4 +1,4 @@
-const API_URL = 'https://habit-tracker-api-400k.onrender.com/habits';
+const API_URL = 'http://localhost:3000/habits';
 
 const habitInput = document.getElementById('habitInput');
 const addBtn = document.getElementById('addBtn');
