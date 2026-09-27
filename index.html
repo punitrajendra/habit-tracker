@@ -1,12 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Habit Tracker</title>
+  <link rel="stylesheet" href="style.css">
+</head>
 <body>
-  <h1>Habit Tracker</h1>
-  <p>Track your daily habits, here "BY PUNIT".</p>
+<div class="wrap">
 
-  <input type="text" id="habitInput" placeholder="Enter a new habit">
-  <button id="addBtn">Add Habit</button>
+  <div class="card">
+    <div class="header-row">
+      <div>
+        <h1>Habit Tracker</h1>
+        <p class="subtitle">Track your daily habits, here "BY PUNIT".</p>
+      </div>
+      <button class="icon-btn" id="themeToggle" aria-label="Toggle dark mode">🌞</button>
+    </div>
+    <div class="add-row">
+      <input type="text" id="habitInput" placeholder="Enter a new habit" aria-label="New habit name">
+      <button id="addBtn">Add</button>
+    </div>
+    <p class="input-error" id="inputError"></p>
+    <ul id="habitList" class="habit-list"></ul>
+  </div>
 
-  <ul id="habitList"></ul>
+  <div class="card">
+    <p class="section-title">Overview</p>
+    <div class="stats-grid">
+      <div class="ring-wrap">
+        <svg width="64" height="64" viewBox="0 0 64 64">
+          <circle cx="32" cy="32" r="27" fill="none" stroke="var(--ring-track)" stroke-width="7"></circle>
+          <circle id="ringProgress" cx="32" cy="32" r="27" fill="none" stroke="var(--accent)" stroke-width="7" stroke-linecap="round" stroke-dasharray="169.6" stroke-dashoffset="169.6"></circle>
+        </svg>
+        <div class="ring-label" id="statRate">0%</div>
+      </div>
+      <div class="stat"><div class="num" id="statBest">0</div><div class="label">Best streak</div></div>
+      <div class="stat"><div class="num" id="statTotal">0</div><div class="label">Days tracked</div></div>
+    </div>
+  </div>
 
-  <script src="script.js"></script>
+  <div class="card">
+    <p class="section-title">
+      Calendar
+      <span class="cal-nav">
+        <select id="calHabitSelect" aria-label="Select habit for calendar"></select>
+        <button id="calPrev" aria-label="Previous month">‹</button>
+        <span class="cal-month-label" id="calMonthLabel"></span>
+        <button id="calNext" aria-label="Next month">›</button>
+      </span>
+    </p>
+    <div class="cal-grid" id="calGrid"></div>
+  </div>
+
+  <div class="card">
+    <p class="section-title">Last 7 days</p>
+    <div class="graph" id="graph"></div>
+  </div>
+
+  <div class="card">
+    <p class="section-title">Recent activity</p>
+    <div class="history-list" id="historyList"></div>
+  </div>
+
+  <p class="quote" id="quote"></p>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="script.js"></script>
 </body>
 </html>
