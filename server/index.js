@@ -8,6 +8,7 @@ const cors = require('cors');
 
 const app = express();
 app.use(cors());
+app.use(express.json());
 
 const PORT = 3000;
 
@@ -17,22 +18,30 @@ mongoose.connect(process.env.MONGO_URI)
 
 const Habit = require('./models/Habit');
 
-app.use(express.json());
-
 app.get('/habits', async (req, res) => {
   const habits = await Habit.find();
   res.json(habits);
 });
 
 app.post('/habits', async (req, res) => {
-  const newHabit = new Habit(req.body);
+  const newHabit = new Habit({ text: req.body.text, completedDates: [] });
   await newHabit.save();
   res.json(newHabit);
 });
 
-app.put('/habits/:id', async (req, res) => {
-  const updated = await Habit.findByIdAndUpdate(req.params.id, req.body, { new: true });
-  res.json(updated);
+app.put('/habits/:id/toggle', async (req, res) => {
+  const { date } = req.body;
+  const habit = await Habit.findById(req.params.id);
+  if (!habit) return res.status(404).json({ message: 'Not found' });
+
+  const idx = habit.completedDates.indexOf(date);
+  if (idx === -1) {
+    habit.completedDates.push(date);
+  } else {
+    habit.completedDates.splice(idx, 1);
+  }
+  await habit.save();
+  res.json(habit);
 });
 
 app.delete('/habits/:id', async (req, res) => {
