@@ -37,3 +37,5 @@ Work in progress — building daily, one commit at a time.
 ##  Running locally
 
 Open `index.html` in your browser, or use the VS Code Live Server extension.
+
+WORK IS GOING ON THE FRONTEND!
